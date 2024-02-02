@@ -1,8 +1,9 @@
 import React from 'react'
 import { VStack , Heading, ButtonGroup, FormControl, FormLabel, Button, FormErrorMessage, Input} from '@chakra-ui/react'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -14,10 +15,29 @@ const Signup = () => {
     validationSchema: Yup.object({
         username: Yup.string().required("Username is required"),
         password: Yup.string().required("Password is required").min(5, "Password is too short")
-    }),
+    })
+    ,
     onSubmit: (values, actions) =>{
-        alert(JSON.stringify(values, null, 2))
-        actions.resetForm()
+        const vals = {...values};
+        actions.resetForm();
+        fetch("http://localhost:3000/auth/register", {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(vals)
+        }).catch(err => console.log(err))
+        .then(res => {
+          if(!res || !res.ok || res.status >= 400){
+            throw new Error("Failed to create account")
+          }
+          return res.json();
+        })
+        .then(data => {
+          if(!data) return;
+          console.log(data);
+        })
     }
   });
 
