@@ -3,9 +3,11 @@ import { VStack , Heading, ButtonGroup, FormControl, FormLabel, Button, FormErro
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
+import { AccountContext } from '../components/AccountContext'
 
 
 const Signup = () => {
+  const {setUser} = React.useContext(AccountContext);
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -36,7 +38,8 @@ const Signup = () => {
         })
         .then(data => {
           if(!data) return;
-          console.log(data);
+          setUser({...data});
+          navigate('/home')
         })
     }
   });

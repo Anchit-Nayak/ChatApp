@@ -5,6 +5,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const server = require('http').createServer(app);
 const authRouter = require('./Routers/authRouter');
+const session = require('express-session');
+require('dotenv').config();
+
 
 const io = new Server(server, {
     cors: {
@@ -19,7 +22,18 @@ app.use(cors({
     credentials: true,
 }));
 app.use(express.json());
-
+app.use(session({
+    secret: process.env.COOKIE_SECRET,
+    credentials: true,
+    name: 'sid',
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+        secure: process.env.ENVIRONMENT === 'production' ? "true": "auto",
+        httpOnly: true,
+        sameSite: process.env.ENVIRONMENT === 'production' ? "none": "lax"
+    }
+}))
 app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
