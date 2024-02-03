@@ -7,18 +7,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup'
 import ToggleColorMode from './components/ToggleColorMode'
 import Views from './components/Views'
+import UserContext from './components/AccountContext'
 
 function App() {
   return (
-    // <Routes>
-    //   <Route path='/' element={<Login/>}/>
-    //   <Route path='/signup' element={<Signup/>}/>
-    //   <Route path='*' element={<Login/>}/>
-    // </Routes>
-    <>
+    <UserContext>
     <Views/>
     <ToggleColorMode/>
-    </>
+    </UserContext>
   )
 }
 
