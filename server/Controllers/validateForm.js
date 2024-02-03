@@ -11,6 +11,9 @@ const validateForm = (req, res, next) => {
         .then((valid) => {
             if(valid){
                 console.log("form valid");
+                next();
+            }else{
+                res.status(400).send("Invalid form")
             }
         })
         .catch((err) => {

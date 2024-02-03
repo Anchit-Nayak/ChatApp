@@ -1,5 +1,5 @@
 import React from 'react'
-import { VStack , Heading, ButtonGroup, FormControl, FormLabel, Button, FormErrorMessage, Input} from '@chakra-ui/react'
+import { Text, VStack , Heading, ButtonGroup, FormControl, FormLabel, Button, FormErrorMessage, Input} from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -7,7 +7,8 @@ import { AccountContext } from '../components/AccountContext'
 
 const Login = () => {
   const {setUser} = React.useContext(AccountContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [error, setError] = React.useState(null);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -39,7 +40,10 @@ const Login = () => {
         if(!data) return;
         console.log(data);
         setUser({...data});
-        navigate('/home')
+        if(data.status){setError(data.status); return;}
+        else{
+          navigate('/home')
+        }
       })
     }
   });
@@ -48,6 +52,7 @@ const Login = () => {
   return (
     <VStack as="form" w={{base: "90%", md: "500px"}} spacing={"1rem"} m="auto" justify={"center"} h={"100vh"} onSubmit={formik.handleSubmit}>
         <Heading size={"2xl"}>Log In</Heading>
+        <Text color="red.500">{error}</Text>
         <FormControl isInvalid={formik.errors.username && formik.touched.username}>
             <FormLabel size={"lg"}>Username</FormLabel>
             <Input name='username' size={"lg"} value={formik.values.username} placeholder='Enter username' autoComplete='off' onChange={formik.handleChange} onBlur={formik.handleBlur}/>
