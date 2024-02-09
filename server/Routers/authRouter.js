@@ -7,11 +7,11 @@ const { isLogin, handleLogin, handleRegister } = require('../Controllers/authCon
 const { rateLimiter } = require('../Controllers/rateLimiter');
 
 router.route('/register')
-    .post(validateForm,rateLimiter, handleRegister)
+    .post(validateForm,rateLimiter(60, 5), handleRegister)
 
 router.route("/login")
     .get(isLogin)
-    .post(validateForm,rateLimiter, handleLogin)
+    .post(validateForm,rateLimiter(60, 5), handleLogin)
 
 module.exports = router;
 
