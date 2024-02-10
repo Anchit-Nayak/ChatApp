@@ -3,10 +3,11 @@ import socket from "../socket";
 import { AccountContext } from './AccountContext';
 
 
-const useSocketSetup = () => {
+const useSocketSetup = setFriendList => {
     const {setUser} = useContext(AccountContext);
     useEffect(() => {
         socket.connect();
+        socket.on('friends', friendList => setFriendList(friendList));
         socket.on('connect error', () => {
            setUser({ loggedIn: false})
         })

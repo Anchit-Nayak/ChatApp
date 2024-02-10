@@ -13,6 +13,8 @@ const {corsConfig} = require('./Controllers/serverController');
 require('dotenv').config();
 const redisClient = require('./redis');
 const {sessionMiddleware} = require('./Controllers/serverController');
+const { authorizeUser, addFriend, onDisconnect } = require('./Controllers/socketController');
+const { on } = require('events');
 
 
 const io = new Server(server, {
@@ -30,9 +32,21 @@ app.get('/', (req, res) => {
 });
 
 io.use(wrap(sessionMiddleware))
+io.use(authorizeUser);
 io.on('connect', (socket) => {
+    console.log(`USERID: ${socket.user.userid}`);
     console.log(socket.request.session.user.username);
+
+
+    socket.on('add_friend', (friendName, cb) =>{
+        addFriend(socket, friendName, cb)
+    })
+
+    socket.on('disconnect', async() => await onDisconnect(socket));
 });
+
+
+
 
 server.listen(3000, () => {
     console.log('listening on *:3000');
