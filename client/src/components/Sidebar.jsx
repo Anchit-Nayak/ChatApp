@@ -8,28 +8,29 @@ import AddFriendModal from './AddFriendModal'
 import { useDisclosure } from '@chakra-ui/react'
 
 const Sidebar = () => {
-  const {friendList, setFriendList} = React.useContext(FriendContext);    
+  const {friendList, setFriendList} = React.useContext(FriendContext);
+  console.log(friendList);    
   const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <>
     <VStack py={'1.4rem'}>
         <HStack justify={'space-evenly'} w={'100%'}>
             <Heading size="md">Add Friend</Heading>
-            <Button onClick={onOpen}>
+            <Button onClick={onOpen}> 
                 <ChatIcon/>
             </Button>
         </HStack>
         <Divider/>
             <VStack as={TabList}>
             {
-                friendList.map((friend, index) => {
+                Object.entries(friendList).map(([key, friend], index) => {
                     return (
-                        <HStack as={Tab} key={index}>
-                            <Circle bg={friend.connected ? "green.500": "red.500"} w="15px" h="15px"/>
-                            <Text>{friend.username}</Text>
-                        </HStack>
+                      <HStack as={Tab} key={index}>
+                        <Circle bg={friend.connected ? "green.500": "red.500"} w="15px" h="15px"/>
+                        <Text>{friend.username}</Text>
+                      </HStack>
                     )
-                })
+                  })
             }
             </VStack>
     </VStack>
