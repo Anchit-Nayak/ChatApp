@@ -9,9 +9,6 @@ Welcome to the Chat App! This full-stack application enables real-time messaging
 - **User-friendly Interface:** Intuitive UI powered by React and Chakra UI.
 - **Secure Backend:** Utilizes PostgreSQL, Express, and Redis for a reliable backend infrastructure.
 
-## Screenshots
-
-
 ## Getting Started
 
 1. Clone the repository.
