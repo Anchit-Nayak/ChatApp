@@ -32,7 +32,7 @@ Welcome to the Chat App! This full-stack application enables real-time messaging
 
    4. Install dependencies: `npm install`
    5. Create a `.env` file
-   6. Add your PostgreSQL database connection details and your cookie secret to the `.env` file in the following format
+   6. Add your Postgres database connection details and your cookie secret to the `.env` file in the following format
       ```
          DATABASE_NAME=YOUR_DB_NAME
          DATABASE_HOST=YOUR_DB_HOST
