@@ -1,4 +1,4 @@
-# Chat App
+# 💬 Chat App
 
 Welcome to the Chat App! This full-stack application enables real-time messaging using React, Formik, Chakra UI, PostgreSQL, Express, Redis, and Socket.IO. Whether you're chatting one-on-one, this app has you covered!
 
